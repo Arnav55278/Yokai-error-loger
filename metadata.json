@@ -1,0 +1,6 @@
+{
+  "name": "ApexVault — JEE Advanced Error & Revision Intelligence System",
+  "description": "Zero-loss error logging, 6-dimensional JEE categorization, AI vision question analysis, and CBT active recall engine for JEE Advanced aspirants.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

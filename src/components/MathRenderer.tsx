@@ -20,12 +20,12 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ content, className =
       });
       return (
         <div
-          className={`katex-block overflow-x-auto py-1.5 my-1 text-slate-100 ${className}`}
+          className={`katex-block overflow-x-auto py-1.5 my-1 text-slate-900 ${className}`}
           dangerouslySetInnerHTML={{ __html: html }}
         />
       );
     } catch {
-      return <pre className="font-mono text-sm text-sky-400 bg-sky-950/20 p-2 rounded">{cleanFormula}</pre>;
+      return <pre className="font-mono text-sm text-blue-700 bg-blue-50 p-2 rounded border border-blue-200">{cleanFormula}</pre>;
     }
   }
 
@@ -49,13 +49,13 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ content, className =
             return (
               <span
                 key={index}
-                className="block my-2 overflow-x-auto text-slate-100"
+                className="block my-2 overflow-x-auto text-slate-900"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             );
           } catch {
             return (
-              <code key={index} className="block my-1 font-mono text-xs text-sky-400 bg-black/40 px-2 py-1 rounded">
+              <code key={index} className="block my-1 font-mono text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded border border-blue-200">
                 {formula}
               </code>
             );
@@ -72,13 +72,13 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ content, className =
             return (
               <span
                 key={index}
-                className="inline-block mx-0.5 text-slate-100 align-baseline"
+                className="inline-block mx-0.5 text-slate-900 align-baseline"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             );
           } catch {
             return (
-              <code key={index} className="font-mono text-xs text-sky-400 bg-black/40 px-1 py-0.5 rounded">
+              <code key={index} className="font-mono text-xs text-blue-700 bg-blue-50 px-1 py-0.5 rounded border border-blue-200">
                 {formula}
               </code>
             );

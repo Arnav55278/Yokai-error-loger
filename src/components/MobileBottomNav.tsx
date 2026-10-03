@@ -30,12 +30,12 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   filteredCount,
 }) => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#070a10]/95 backdrop-blur-xl border-t border-white/[0.08] px-1 pt-1.5 pb-[max(0.35rem,env(safe-area-inset-bottom))] flex items-center justify-around select-none w-full max-w-full shadow-[0_-8px_20px_rgba(0,0,0,0.6)]">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200 px-1 pt-1.5 pb-[max(0.35rem,env(safe-area-inset-bottom))] flex items-center justify-around select-none w-full max-w-full shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
       {/* 1. Cards View */}
       <button
         onClick={() => onViewChange("gallery")}
         className={`flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium transition-colors ${
-          currentView === "gallery" ? "text-sky-400 font-bold" : "text-slate-400 hover:text-slate-200"
+          currentView === "gallery" ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-800"
         }`}
       >
         <Layers className="w-4 h-4" />
@@ -46,20 +46,20 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={onOpenPractice}
         disabled={filteredCount === 0}
-        className="flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-slate-200 transition-colors relative disabled:opacity-40"
+        className="flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium text-slate-500 hover:text-blue-600 transition-colors relative disabled:opacity-40"
       >
-        <Play className="w-4 h-4 text-emerald-400 fill-emerald-400/30" />
-        <span className="mt-0.5">Drill ({filteredCount})</span>
+        <Play className="w-4 h-4 text-blue-600 fill-blue-600/20" />
+        <span className="mt-0.5 font-semibold">Drill ({filteredCount})</span>
       </button>
 
-      {/* 3. Primary Center Log Mistake Action */}
+      {/* 3. Primary Center Log Mistake Action (Vibrant Orange Button) */}
       <div className="flex-1 flex items-center justify-center -mt-5">
         <button
           onClick={onOpenIngestion}
-          className="w-12 h-12 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-slate-950 font-bold shadow-[0_0_20px_rgba(56,189,248,0.5)] active:scale-95 transition-transform flex items-center justify-center border-2 border-[#070a10]"
+          className="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold shadow-[0_4px_16px_rgba(249,115,22,0.4)] active:scale-95 transition-transform flex items-center justify-center border-2 border-white"
           title="Log new mistake from camera or photo"
         >
-          <Plus className="w-6 h-6 stroke-[2.8]" />
+          <Plus className="w-6 h-6 stroke-[3]" />
         </button>
       </div>
 
@@ -67,7 +67,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={() => onViewChange("flashcards")}
         className={`flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium transition-colors ${
-          currentView === "flashcards" ? "text-sky-400 font-bold" : "text-slate-400 hover:text-slate-200"
+          currentView === "flashcards" ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-800"
         }`}
       >
         <Zap className="w-4 h-4" />
@@ -77,7 +77,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       {/* 5. Mobile Filters & Syllabus Drawer */}
       <button
         onClick={onOpenFilters}
-        className="flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-slate-200 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center py-1 rounded-lg text-[10px] font-medium text-slate-500 hover:text-slate-800 transition-colors"
       >
         <Filter className="w-4 h-4" />
         <span className="mt-0.5">Syllabus</span>

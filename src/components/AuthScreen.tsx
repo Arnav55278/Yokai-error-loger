@@ -103,36 +103,36 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#05070c] text-slate-100 flex items-center justify-center p-4 relative overflow-hidden select-none">
-      {/* Dynamic Cyber Ambient Backing Mesh */}
+    <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex items-center justify-center p-4 relative overflow-hidden select-none">
+      {/* Dynamic Ambient Backing Mesh (Soft Blue & Warm Orange) */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-sky-500/10 via-purple-600/10 to-transparent rounded-full blur-3xl opacity-70 animate-pulse" />
-        <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-sky-500/08 rounded-full blur-3xl" />
-        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-purple-500/08 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-blue-500/10 via-orange-500/08 to-transparent rounded-full blur-3xl opacity-70" />
+        <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-blue-500/08 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-orange-500/08 rounded-full blur-3xl" />
       </div>
 
-      {/* Main Ultra Pro Container */}
+      {/* Main Container */}
       <div className="w-full max-w-md relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] mb-3 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8]" />
-            <span className="text-[11px] font-mono text-sky-300 font-semibold tracking-wide">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 mb-3 shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_#f97316]" />
+            <span className="text-[11px] font-mono text-blue-700 font-bold tracking-wide">
               APEXVAULT · JEE ADVANCED
             </span>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight uppercase">
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase">
             Aspirant Error Vault
           </h1>
-          <p className="text-xs text-slate-400 font-mono mt-1">
+          <p className="text-xs text-slate-500 font-mono mt-1">
             Zero-Leak Spaced Repetition &amp; Mistake Diagnosis System
           </p>
         </div>
 
         {/* Auth Glass Card */}
-        <div className="bg-[#090d16]/90 border border-white/[0.12] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-6 backdrop-blur-xl relative overflow-hidden">
+        <div className="bg-white/95 border border-slate-200/90 rounded-2xl shadow-xl p-6 backdrop-blur-xl relative overflow-hidden">
           {/* Top Mode Segmented Switcher */}
-          <div className="grid grid-cols-2 gap-1 p-1 bg-black/60 border border-white/[0.08] rounded-xl mb-6">
+          <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 border border-slate-200 rounded-xl mb-6">
             <button
               type="button"
               onClick={() => {
@@ -141,8 +141,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
               }}
               className={`py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
                 !isRegisterMode
-                  ? "bg-white/[0.12] text-white shadow-sm border border-white/[0.1]"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-white text-blue-600 shadow-sm border border-slate-200/60 font-bold"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <Lock className="w-3.5 h-3.5" />
@@ -157,8 +157,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
               }}
               className={`py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
                 isRegisterMode
-                  ? "bg-sky-500/20 text-sky-300 shadow-sm border border-sky-500/40"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-blue-600 text-white shadow-sm font-bold"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <Zap className="w-3.5 h-3.5" />
@@ -169,7 +169,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
           {/* Quick-select pill for saved accounts on machine */}
           {!isRegisterMode && registeredAccounts.length > 0 && (
             <div className="mb-4">
-              <span className="text-[10px] font-mono text-slate-400 block mb-1.5">
+              <span className="text-[10px] font-mono text-slate-500 font-semibold block mb-1.5">
                 SAVED ACCOUNTS ON THIS DEVICE:
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -180,13 +180,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
                     onClick={() => handleSelectQuickAccount(acc.email)}
                     className={`px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all flex items-center gap-1.5 cursor-pointer ${
                       email.toLowerCase() === acc.email.toLowerCase()
-                        ? "bg-sky-500/20 text-sky-300 border-sky-500/40"
-                        : "bg-white/[0.03] text-slate-300 border-white/[0.06] hover:bg-white/[0.06]"
+                        ? "bg-blue-50 text-blue-700 border-blue-300 font-bold"
+                        : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
                     <span
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: acc.avatarColor || "#38bdf8" }}
+                      style={{ backgroundColor: acc.avatarColor || "#2563eb" }}
                     />
                     <span>{acc.username}</span>
                   </button>
@@ -197,9 +197,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
 
           {/* Error Banner */}
           {errorMessage && (
-            <div className="mb-4 p-3 bg-rose-950/40 border border-rose-500/40 rounded-xl flex items-start gap-2.5 text-rose-300 text-xs animate-in fade-in duration-150">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-400" />
-              <div className="leading-tight">{errorMessage}</div>
+            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-rose-700 text-xs animate-in fade-in duration-150">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
+              <div className="leading-tight font-medium">{errorMessage}</div>
             </div>
           )}
 
@@ -208,19 +208,19 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             {/* 1. Username Field (ONLY for Register Mode) */}
             {isRegisterMode && (
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-slate-300 font-medium flex items-center justify-between">
+                <label className="text-[11px] font-mono text-slate-700 font-semibold flex items-center justify-between">
                   <span>ASPIRANT USERNAME</span>
-                  <span className="text-[10px] text-sky-400">First-time only</span>
+                  <span className="text-[10px] text-blue-600 font-medium">First-time only</span>
                 </label>
                 <div className="relative">
-                  <UserIcon className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                  <UserIcon className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
                     type="text"
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="e.g. Aditya Khari / Rank1Target"
-                    className="w-full bg-[#05070a] border border-white/[0.1] focus:border-sky-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-all font-sans"
+                    className="w-full bg-slate-50 border border-slate-200 focus:border-blue-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all font-sans"
                   />
                 </div>
               </div>
@@ -228,18 +228,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
 
             {/* 2. Email Field (Always required for both login and signup) */}
             <div className="space-y-1">
-              <label className="text-[11px] font-mono text-slate-300 font-medium">
+              <label className="text-[11px] font-mono text-slate-700 font-semibold">
                 EMAIL ADDRESS
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="aspirant@gmail.com"
-                  className="w-full bg-[#05070a] border border-white/[0.1] focus:border-sky-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-all font-sans"
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-blue-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all font-sans"
                 />
               </div>
             </div>
@@ -247,25 +247,25 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             {/* 3. Password Field */}
             <div className="space-y-1">
               <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-slate-300 font-medium">PASSWORD</span>
+                <span className="text-slate-700 font-semibold">PASSWORD</span>
                 {isRegisterMode && (
-                  <span className="text-[10px] text-slate-500">Min 6 characters</span>
+                  <span className="text-[10px] text-slate-400">Min 6 characters</span>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-[#05070a] border border-white/[0.1] focus:border-sky-500 rounded-xl pl-9 pr-10 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-all font-mono"
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-blue-500 rounded-xl pl-9 pr-10 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all font-mono"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300 transition-colors p-0.5"
+                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 transition-colors p-0.5 cursor-pointer"
                   title={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -276,14 +276,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             {/* Target Exam Year (Only for Register Mode) */}
             {isRegisterMode && (
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-slate-300 font-medium flex items-center gap-1.5">
-                  <GraduationCap className="w-3.5 h-3.5 text-sky-400" />
+                <label className="text-[11px] font-mono text-slate-700 font-semibold flex items-center gap-1.5">
+                  <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
                   <span>TARGET EXAM GOAL</span>
                 </label>
                 <select
                   value={targetYear}
                   onChange={(e) => setTargetYear(e.target.value)}
-                  className="w-full bg-[#05070a] border border-white/[0.1] focus:border-sky-500 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-blue-500 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none"
                 >
                   <option value="JEE Advanced 2026">JEE Advanced 2026 (Class 12 / Dropper)</option>
                   <option value="JEE Advanced 2027">JEE Advanced 2027 (Class 11)</option>
@@ -298,11 +298,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 font-bold text-xs shadow-[0_4px_20px_rgba(56,189,248,0.25)] hover:shadow-[0_6px_24px_rgba(56,189,248,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold text-xs shadow-md shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
                   <span>Verifying Credentials...</span>
                 </>
               ) : isRegisterMode ? (
@@ -322,9 +322,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
           {/* Divider */}
           <div className="relative my-4 flex items-center justify-center">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/[0.06]" />
+              <div className="w-full border-t border-slate-200" />
             </div>
-            <span className="relative bg-[#090d16] px-3 text-[10px] font-mono text-slate-500 uppercase">
+            <span className="relative bg-white px-3 text-[10px] font-mono text-slate-400 uppercase font-semibold">
               OR QUICK EXPLORE
             </span>
           </div>
@@ -334,9 +334,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             type="button"
             onClick={handleDemoAccess}
             disabled={isLoading}
-            className="w-full py-2 px-3 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-300 hover:text-white text-xs font-mono transition-colors flex items-center justify-center gap-2"
+            className="w-full py-2 px-3 rounded-lg bg-orange-50 hover:bg-orange-100 border border-orange-200 text-orange-700 text-xs font-mono font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-orange-500" />
             <span>1-Click Demo Aspirant Mode</span>
           </button>
         </div>
@@ -344,7 +344,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
         {/* Security & Offline Notice */}
         <div className="mt-4 text-center">
           <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5 font-mono">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>Encrypted local authentication · Works 100% offline</span>
           </p>
         </div>

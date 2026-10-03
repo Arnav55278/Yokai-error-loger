@@ -32,17 +32,17 @@ export const MobileApkBanner: React.FC<MobileApkBannerProps> = ({ onOpenApkModal
   return (
     <div
       onClick={onOpenApkModal}
-      className="md:hidden bg-gradient-to-r from-emerald-950 via-[#071318] to-sky-950 border-b border-emerald-500/30 px-3.5 py-2 flex items-center justify-between gap-2 text-xs select-none cursor-pointer animate-in slide-in-from-top duration-200 sticky top-14 z-20 shadow-md"
+      className="md:hidden bg-gradient-to-r from-blue-50 via-white to-orange-50 border-b border-blue-200/80 px-3.5 py-2 flex items-center justify-between gap-2 text-xs select-none cursor-pointer animate-in slide-in-from-top duration-200 sticky top-13 sm:top-14 z-20 shadow-xs"
     >
       <div className="flex items-center gap-2 truncate">
-        <div className="p-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0">
+        <div className="p-1 rounded-md bg-blue-100 text-blue-700 border border-blue-200 shrink-0">
           <Smartphone className="w-3.5 h-3.5" />
         </div>
         <div className="truncate">
-          <span className="font-bold text-white text-[11px] block truncate">
+          <span className="font-bold text-slate-900 text-[11px] block truncate">
             Install ApexVault Android App
           </span>
-          <span className="text-[10px] font-mono text-emerald-300 block truncate">
+          <span className="text-[10px] font-mono text-blue-700 font-medium block truncate">
             Full Touch Widgets &amp; Offline APK
           </span>
         </div>
@@ -54,14 +54,14 @@ export const MobileApkBanner: React.FC<MobileApkBannerProps> = ({ onOpenApkModal
             e.stopPropagation();
             onOpenApkModal();
           }}
-          className="px-2.5 py-1 rounded-md bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[10px] font-mono shadow-sm flex items-center gap-1 transition-colors cursor-pointer"
+          className="px-2.5 py-1 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] font-mono shadow-xs flex items-center gap-1 transition-colors cursor-pointer"
         >
           <Download className="w-3 h-3" />
           <span>Get APK</span>
         </button>
         <button
           onClick={handleDismiss}
-          className="p-1 text-slate-400 hover:text-white"
+          className="p-1 text-slate-400 hover:text-slate-700"
           title="Dismiss"
         >
           <X className="w-3.5 h-3.5" />

@@ -80,7 +80,7 @@ export interface SyncState {
   syncError?: string;
 }
 
-export type AppTheme = "obsidian" | "tokyo" | "emerald" | "amber" | "crimson" | "monochrome";
+export type AppTheme = "solar" | "obsidian" | "tokyo" | "emerald" | "amber" | "crimson" | "monochrome";
 
 export interface AppSettings {
   googleDriveClientId: string;

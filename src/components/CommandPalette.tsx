@@ -144,16 +144,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center pt-16 px-4 animate-in fade-in duration-150 select-none"
+      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-start justify-center pt-8 sm:pt-16 px-2.5 sm:px-4 animate-in fade-in duration-150 select-none"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-3xl bg-[#090d16] border border-white/[0.12] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[85vh]"
+        className="w-full max-w-3xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] text-slate-900"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="h-14 px-4 border-b border-white/[0.08] flex items-center gap-3 bg-[#06080e]">
-          <Search className="w-5 h-5 text-sky-400 shrink-0" />
+        <div className="h-14 px-4 border-b border-slate-200 flex items-center gap-3 bg-slate-50">
+          <Search className="w-5 h-5 text-blue-600 shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -164,27 +164,27 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             }}
             onKeyDown={handleKeyDown}
             placeholder="Search questions by OCR text, equation, chapter, subtopic, or ID..."
-            className="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-sans"
+            className="flex-1 bg-transparent text-sm text-slate-900 placeholder-slate-400 focus:outline-none font-sans"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="p-1 rounded text-slate-400 hover:text-white"
+              className="p-1 rounded text-slate-400 hover:text-slate-600 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-block font-mono text-[10px] text-slate-400 bg-white/[0.06] border border-white/[0.1] px-2 py-0.5 rounded">
+          <kbd className="hidden sm:inline-block font-mono text-[10px] text-slate-500 bg-white border border-slate-300 px-2 py-0.5 rounded shadow-xs">
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar bg-white">
           {/* System Actions */}
           {systemActions.length > 0 && (
             <div className="space-y-1">
-              <div className="px-2 pt-1 pb-1 text-[10px] font-mono text-slate-500 tracking-wider">
+              <div className="px-2 pt-1 pb-1 text-[10px] font-mono text-slate-400 font-semibold tracking-wider">
                 COMMANDS &amp; ACTIONS
               </div>
               {systemActions.map((act, idx) => {
@@ -194,17 +194,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <div
                     key={act.id}
                     onClick={act.run}
-                    className={`px-3 py-2 rounded-lg flex items-center justify-between cursor-pointer transition-colors ${
+                    className={`px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer transition-colors ${
                       isSelected
-                        ? "bg-sky-500/20 text-white border border-sky-500/30"
-                        : "text-slate-300 hover:bg-white/[0.04]"
+                        ? "bg-blue-50 text-blue-900 border border-blue-200 shadow-xs"
+                        : "text-slate-700 hover:bg-slate-50"
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isSelected ? "text-sky-400" : "text-slate-400"}`} />
+                      <Icon className={`w-4 h-4 ${isSelected ? "text-blue-600" : "text-slate-500"}`} />
                       <span className="font-medium text-xs">{act.title}</span>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-500">{act.category}</span>
+                    <span className="text-[10px] font-mono text-slate-400">{act.category}</span>
                   </div>
                 );
               })}
@@ -214,9 +214,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Matched Questions with PROMINENT IMAGE PREVIEWS */}
           {matchedQuestions.length > 0 && (
             <div className="pt-2">
-              <div className="px-2 pb-1.5 text-[10px] font-mono text-slate-400 font-semibold tracking-wider flex items-center justify-between">
+              <div className="px-2 pb-1.5 text-[10px] font-mono text-slate-500 font-semibold tracking-wider flex items-center justify-between">
                 <span>QUESTIONS &amp; OCR MATCHES ({matchedQuestions.length})</span>
-                <span className="text-sky-400 font-normal">Click question to open deep-dive</span>
+                <span className="text-blue-600 font-medium">Click question to open deep-dive</span>
               </div>
 
               <div className="space-y-2">
@@ -232,16 +232,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                         onClose();
                         onSelectQuestion(q);
                       }}
-                      className={`p-3 rounded-xl flex items-center justify-between gap-4 cursor-pointer transition-all border ${
+                      className={`p-3 rounded-xl flex items-center justify-between gap-3 sm:gap-4 cursor-pointer transition-all border ${
                         isSelected
-                          ? "bg-sky-500/15 border-sky-500/50 shadow-[0_0_20px_rgba(56,189,248,0.15)]"
-                          : "bg-[#0b0f19] border-white/[0.07] hover:border-white/[0.15] hover:bg-white/[0.03]"
+                          ? "bg-blue-50/70 border-blue-400 shadow-sm"
+                          : "bg-white border-slate-200 hover:border-blue-300 hover:bg-slate-50/60 shadow-xs"
                       }`}
                     >
                       {/* Left: Dual / Question Photo Preview */}
-                      <div className="flex items-center gap-3.5 min-w-0 flex-1">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
                         {/* Question Image Preview Thumbnail */}
-                        <div className="relative w-20 h-14 sm:w-24 sm:h-16 rounded-lg border border-white/[0.12] bg-[#030508] overflow-hidden shrink-0 shadow-md flex items-center justify-center p-1">
+                        <div className="relative w-16 h-12 sm:w-20 sm:h-14 rounded-lg border border-slate-200 bg-slate-50 overflow-hidden shrink-0 shadow-xs flex items-center justify-center p-1">
                           <img
                             src={q.questionImage}
                             alt={q.id}
@@ -249,41 +249,41 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                           />
                           {q.solutionImage && (
                             <div
-                              className="absolute bottom-0.5 right-0.5 bg-black/85 text-[8px] font-mono text-sky-300 px-1 py-0.2 rounded border border-white/[0.1]"
+                              className="absolute bottom-0.5 right-0.5 bg-slate-900/80 text-[8px] font-mono text-white px-1 py-0.2 rounded"
                               title="Solution photo available"
                             >
                               +Sol
                             </div>
                           )}
                           {q.starred && (
-                            <div className="absolute top-0.5 left-0.5 bg-black/85 p-0.5 rounded">
-                              <Star className="w-2.5 h-2.5 text-amber-400 fill-amber-400" />
+                            <div className="absolute top-0.5 left-0.5 bg-white/90 p-0.5 rounded shadow-xs">
+                              <Star className="w-2.5 h-2.5 text-amber-500 fill-amber-500" />
                             </div>
                           )}
                         </div>
 
                         {/* Text / Concept / OCR */}
                         <div className="space-y-1 min-w-0 flex-1">
-                          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
-                            <span className="text-sky-400 font-bold">{q.id}</span>
+                          <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] font-mono text-slate-500">
+                            <span className="text-blue-600 font-bold">{q.id}</span>
                             <span>·</span>
-                            <span className="font-semibold text-slate-200">{q.subject}</span>
+                            <span className="font-semibold text-slate-800">{q.subject}</span>
                             <span>/</span>
                             <span className="truncate">{q.chapter}</span>
                             {q.starred && (
-                              <span className="text-amber-400 font-bold ml-1 flex items-center gap-0.5">
-                                <Star className="w-3 h-3 fill-current inline" />
+                              <span className="text-amber-600 font-bold ml-1 flex items-center gap-0.5">
+                                <Star className="w-3 h-3 fill-current inline text-amber-500" />
                                 <span>Priority</span>
                               </span>
                             )}
                           </div>
 
-                          <div className="font-semibold text-slate-100 text-xs truncate">
+                          <div className="font-semibold text-slate-900 text-xs truncate">
                             {q.subtopic}
                           </div>
 
                           {q.ocrText && (
-                            <div className="text-[11px] text-slate-400 line-clamp-1 italic bg-black/40 px-2 py-0.5 rounded border border-white/[0.04]">
+                            <div className="text-[11px] text-slate-600 line-clamp-1 italic bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
                               "{q.ocrText}"
                             </div>
                           )}
@@ -297,7 +297,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                         >
                           {q.errorType}
                         </span>
-                        <div className="text-[10px] font-mono text-slate-400">
+                        <div className="text-[10px] font-mono text-slate-500">
                           Stage {q.status} · {q.source}
                         </div>
                       </div>
@@ -309,21 +309,21 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           )}
 
           {totalItems === 0 && (
-            <div className="p-12 text-center text-slate-500 text-xs">
-              <Search className="w-8 h-8 mx-auto text-slate-600 mb-2" />
+            <div className="p-12 text-center text-slate-400 text-xs">
+              <Search className="w-8 h-8 mx-auto text-slate-300 mb-2" />
               No matching questions or actions found for "{query}".
             </div>
           )}
         </div>
 
         {/* Footer shortcuts */}
-        <div className="h-10 px-4 border-t border-white/[0.06] bg-[#06080e] flex items-center justify-between text-[11px] font-mono text-slate-400">
-          <div className="flex items-center gap-4">
+        <div className="h-10 px-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-[11px] font-mono text-slate-500">
+          <div className="flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px]">
             <span>↑↓ Navigate</span>
-            <span>↵ Open Question &amp; Photos</span>
+            <span>↵ Open</span>
             <span>ESC Close</span>
           </div>
-          <span className="text-sky-400">ApexVault Vision Search</span>
+          <span className="text-blue-600 font-medium">ApexVault Vision Search</span>
         </div>
       </div>
     </div>

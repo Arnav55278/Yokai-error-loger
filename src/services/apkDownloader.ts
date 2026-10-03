@@ -128,26 +128,105 @@ export async function downloadAndroidApkPackage(onProgress?: (percent: number) =
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <meta name="theme-color" content="#2563eb"/>
   <title>ApexVault JEE Advanced</title>
   <style>
-    body { margin:0; padding:0; background:#05070c; color:#fff; font-family:sans-serif; height:100vh; display:flex; flex-direction:column; }
+    body { margin:0; padding:0; background:#f8fafc; color:#0f172a; font-family:sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
     iframe { border:none; width:100%; height:100%; flex:1; }
-    .loader { position:fixed; inset:0; background:#05070c; display:flex; align-items:center; justify-content:center; flex-direction:column; z-index:99; transition:opacity .3s; }
+    .loader { position:fixed; inset:0; background:#ffffff; display:flex; align-items:center; justify-content:center; flex-direction:column; z-index:99; transition:opacity .3s; }
+    @keyframes spin { to { transform:rotate(360deg); } }
   </style>
 </head>
 <body>
   <div id="loader" class="loader">
-    <div style="width:50px;height:50px;border:3px solid #38bdf8;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
-    <p style="margin-top:16px;font-size:14px;color:#94a3b8;font-family:monospace;">Launching ApexVault Mobile...</p>
+    <div style="width:52px;height:52px;border:4px solid #2563eb;border-top-color:#f97316;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    <p style="margin-top:16px;font-size:14px;color:#0f172a;font-family:sans-serif;font-weight:bold;">ApexVault Mobile Launching...</p>
+    <p style="margin-top:4px;font-size:11px;color:#64748b;font-family:monospace;">JEE Advanced Error Intelligence</p>
   </div>
   <iframe id="appFrame" src="${window.location.origin}" onload="document.getElementById('loader').style.display='none'"></iframe>
-  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 </body>
 </html>`;
 
   zip.file("assets/index.html", offlineIndexHtml);
-  onProgress?.(55);
+  onProgress?.(50);
+
+  // 3. Android Kotlin Source: MainActivity.kt
+  const mainActivityKt = `package com.apexvault.jee.advanced
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.webkit.*
+import android.widget.FrameLayout
+
+class MainActivity : Activity() {
+    private lateinit var webView: WebView
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        webView = WebView(this).apply {
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.allowFileAccess = true
+            settings.mediaPlaybackRequiresUserGesture = false
+            settings.cacheMode = WebSettings.LOAD_DEFAULT
+            webViewClient = WebViewClient()
+            webChromeClient = object : WebChromeClient() {}
+            loadUrl("${window.location.origin}")
+        }
+        val layout = FrameLayout(this).apply {
+            addView(webView)
+        }
+        setContentView(layout)
+    }
+
+    override fun onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+}
+`;
+  zip.file("app/src/main/java/com/apexvault/jee/advanced/MainActivity.kt", mainActivityKt);
+  onProgress?.(65);
+
+  // 4. Gradle Build Spec (app/build.gradle)
+  const buildGradle = `plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.apexvault.jee.advanced'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.apexvault.jee.advanced"
+        minSdk 24
+        targetSdk 34
+        versionCode 102
+        versionName "1.0.2"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}
+`;
+  zip.file("app/build.gradle", buildGradle);
 
   // 3. Package Info & Instructions for Android Side-loading
   const installGuide = `# ApexVault JEE Advanced — Mobile APK Installation Guide

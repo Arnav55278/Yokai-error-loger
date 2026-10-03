@@ -9,6 +9,7 @@ const STORE_SETTINGS = "settings";
 const DEFAULT_SETTINGS: AppSettings = {
   googleDriveClientId: "",
   geminiModel: "gemini-3.8-flash",
+  theme: "solar",
   srsIntervals: {
     stage1: 3,
     stage2: 7,

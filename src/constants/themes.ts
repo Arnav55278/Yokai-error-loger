@@ -14,6 +14,17 @@ export interface ThemeConfig {
 
 export const APP_THEMES: ThemeConfig[] = [
   {
+    id: "solar",
+    name: "White, Blue & Orange",
+    subtitle: "Crisp white canvas with royal blue & vivid orange accents",
+    accentHex: "#2563eb",
+    dotColor: "bg-blue-600",
+    bgHex: "#f8fafc",
+    cardBgHex: "#ffffff",
+    borderHex: "rgba(37, 99, 235, 0.2)",
+    glowRgba: "rgba(37, 99, 235, 0.12)",
+  },
+  {
     id: "obsidian",
     name: "Obsidian Space",
     subtitle: "Linear default with cyan neon glow",

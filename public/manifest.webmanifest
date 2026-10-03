@@ -4,8 +4,8 @@
   "description": "Offline-first error analysis, active recall, and CBT revision engine for JEE Advanced aspirants.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#05070c",
-  "theme_color": "#05070c",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
   "lang": "en",
   "scope": "/",
   "id": "/",
@@ -35,6 +35,36 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Log Mistake",
+      "short_name": "Log",
+      "description": "Snap or upload a new JEE mistake",
+      "url": "/?action=ingest",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Drill",
+      "short_name": "Drill",
+      "description": "Blind CBT practice due today",
+      "url": "/?action=practice",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Rapid Flashcards",
+      "short_name": "Flashcards",
+      "description": "60-second active recall cards",
+      "url": "/?action=flashcards",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Formula Vault",
+      "short_name": "Formulas",
+      "description": "Key formulas and RAR principles",
+      "url": "/?action=formulas",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

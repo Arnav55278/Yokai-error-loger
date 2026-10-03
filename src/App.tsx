@@ -136,6 +136,22 @@ export default function App() {
     return () => window.removeEventListener("paste", handlePaste);
   }, []);
 
+  // Android App Shortcuts & URL action listener (e.g., /?action=ingest or /?action=practice)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const action = params.get("action");
+    if (action === "ingest") {
+      setIsIngestionOpen(true);
+    } else if (action === "practice") {
+      setIsPracticeOpen(true);
+    } else if (action === "flashcards") {
+      setCurrentView("flashcards");
+    } else if (action === "formulas") {
+      setCurrentView("formulas");
+    }
+  }, []);
+
   // Keyboard Shortcuts: Ctrl + K (Command Palette), Ctrl + / or Ctrl + I
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -150,7 +166,7 @@ export default function App() {
 
   // Sync active theme to document body & html data-theme
   useEffect(() => {
-    const activeTheme = settings.theme || "obsidian";
+    const activeTheme = (!settings.theme || settings.theme === "obsidian") ? "solar" : settings.theme;
     document.documentElement.setAttribute("data-theme", activeTheme);
     document.body.setAttribute("data-theme", activeTheme);
   }, [settings.theme]);
@@ -362,7 +378,7 @@ export default function App() {
   }
 
   return (
-    <div className="h-[100dvh] w-full max-w-full overflow-hidden bg-[#06070a] text-slate-100 flex flex-col font-sans select-none">
+    <div className="h-[100dvh] w-full max-w-full overflow-hidden bg-slate-50 text-slate-900 flex flex-col font-sans select-none">
       {/* Strict Top Bar Contract Navigation */}
       <Header
         currentView={currentView}
@@ -408,18 +424,18 @@ export default function App() {
         {/* Mobile Slide-Over Filter Drawer for Phone Screens */}
         {isMobileFiltersOpen && (
           <div
-            className="md:hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex animate-in fade-in duration-150"
+            className="md:hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex animate-in fade-in duration-150"
             onClick={() => setIsMobileFiltersOpen(false)}
           >
             <div
-              className="w-4/5 max-w-xs h-full bg-[#070a10] border-r border-white/[0.1] shadow-2xl flex flex-col"
+              className="w-4/5 max-w-xs h-full bg-white border-r border-slate-200 shadow-2xl flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="h-12 px-4 border-b border-white/[0.08] flex items-center justify-between">
-                <span className="text-xs font-bold text-white font-mono">FILTERS &amp; SYLLABUS</span>
+              <div className="h-12 px-4 border-b border-slate-200 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-900 font-mono">FILTERS &amp; SYLLABUS</span>
                 <button
                   onClick={() => setIsMobileFiltersOpen(false)}
-                  className="p-1 rounded text-slate-400 hover:text-white"
+                  className="p-1 rounded text-slate-500 hover:text-slate-900"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -440,7 +456,7 @@ export default function App() {
         )}
 
         {/* Viewport Content (with bottom padding for mobile navigation dock) */}
-        <main className="flex-1 flex flex-col overflow-hidden bg-[#07090e] pb-20 md:pb-0 w-full max-w-full">
+        <main className="flex-1 flex flex-col overflow-hidden bg-slate-50 pb-20 md:pb-0 w-full max-w-full">
           {currentView === "gallery" && (
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <GalleryView
@@ -588,6 +604,12 @@ export default function App() {
       <ApkDownloaderModal
         isOpen={isApkModalOpen}
         onClose={() => setIsApkModalOpen(false)}
+        questions={questions}
+        onStartPractice={handleStartPractice}
+        onOpenIngestion={() => {
+          setPastedImage(null);
+          setIsIngestionOpen(true);
+        }}
       />
     </div>
   );

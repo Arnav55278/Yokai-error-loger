@@ -69,43 +69,43 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
     .slice(0, 6);
 
   return (
-    <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 select-none max-w-6xl mx-auto custom-scrollbar w-full max-w-full">
+    <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 select-none max-w-6xl mx-auto custom-scrollbar w-full max-w-full bg-slate-50 text-slate-900">
       {/* Executive KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {/* Total Logged */}
-        <div className="p-4 bg-[#0d1017] border border-white/[0.07] rounded-lg">
-          <div className="text-[11px] font-mono text-slate-400 mb-1">TOTAL LOGGED MISTAKES</div>
-          <div className="text-2xl font-bold font-mono text-white tabular-nums">{total}</div>
+        <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+          <div className="text-[11px] font-mono text-slate-500 mb-1 font-semibold">TOTAL LOGGED MISTAKES</div>
+          <div className="text-2xl font-bold font-mono text-slate-900 tabular-nums">{total}</div>
           <div className="text-[11px] text-slate-500 mt-1">Across 3 JEE subjects</div>
         </div>
 
         {/* Silly Rate */}
-        <div className="p-4 bg-[#0d1017] border border-white/[0.07] rounded-lg">
-          <div className="text-[11px] font-mono text-amber-400 mb-1 flex items-center justify-between">
+        <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+          <div className="text-[11px] font-mono text-orange-600 mb-1 flex items-center justify-between font-semibold">
             <span>PREVENTABLE SILLY LOSS</span>
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+            <AlertTriangle className="w-3.5 h-3.5 text-orange-500" />
           </div>
-          <div className="text-2xl font-bold font-mono text-amber-400 tabular-nums">{sillyPct}%</div>
+          <div className="text-2xl font-bold font-mono text-orange-600 tabular-nums">{sillyPct}%</div>
           <div className="text-[11px] text-slate-500 mt-1">{sillyTotal} questions misread or miscalculated</div>
         </div>
 
         {/* Nemesis */}
-        <div className="p-4 bg-[#0d1017] border border-white/[0.07] rounded-lg">
-          <div className="text-[11px] font-mono text-rose-400 mb-1 flex items-center justify-between">
+        <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+          <div className="text-[11px] font-mono text-rose-600 mb-1 flex items-center justify-between font-semibold">
             <span>NEMESIS QUESTIONS</span>
-            <Flame className="w-3.5 h-3.5 text-rose-400" />
+            <Flame className="w-3.5 h-3.5 text-rose-500" />
           </div>
-          <div className="text-2xl font-bold font-mono text-rose-400 tabular-nums">{nemesisQuestions.length}</div>
+          <div className="text-2xl font-bold font-mono text-rose-600 tabular-nums">{nemesisQuestions.length}</div>
           <div className="text-[11px] text-slate-500 mt-1">Failed 2+ times in practice</div>
         </div>
 
         {/* Mastered */}
-        <div className="p-4 bg-[#0d1017] border border-white/[0.07] rounded-lg">
-          <div className="text-[11px] font-mono text-emerald-400 mb-1 flex items-center justify-between">
+        <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+          <div className="text-[11px] font-mono text-emerald-600 mb-1 flex items-center justify-between font-semibold">
             <span>MASTERED (STAGE 4)</span>
-            <Award className="w-3.5 h-3.5 text-emerald-400" />
+            <Award className="w-3.5 h-3.5 text-emerald-500" />
           </div>
-          <div className="text-2xl font-bold font-mono text-emerald-400 tabular-nums">
+          <div className="text-2xl font-bold font-mono text-emerald-600 tabular-nums">
             {Math.round((stage4Count / total) * 100)}%
           </div>
           <div className="text-[11px] text-slate-500 mt-1">{stage4Count} verified retained concepts</div>
@@ -115,65 +115,65 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
       {/* Row 2: Subject Bifurcation & SRS Funnel */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Subject Bifurcation */}
-        <div className="p-5 bg-[#0d1017] border border-white/[0.07] rounded-lg">
+        <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-mono font-semibold text-slate-300">SUBJECT DISTRIBUTION</h3>
+            <h3 className="text-xs font-mono font-bold text-slate-800">SUBJECT DISTRIBUTION</h3>
             <span className="text-[11px] font-mono text-slate-500">Relative Mistake Volume</span>
           </div>
 
           {/* Multi-segment Progress Bar */}
-          <div className="h-3 w-full rounded-full bg-black/60 overflow-hidden flex mb-4">
+          <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex mb-4">
             <div
               style={{ width: `${physicsPct}%` }}
-              className="bg-sky-500 h-full transition-all"
+              className="bg-blue-600 h-full transition-all"
               title={`Physics: ${physicsCount} (${physicsPct}%)`}
             />
             <div
               style={{ width: `${chemistryPct}%` }}
-              className="bg-amber-500 h-full transition-all"
+              className="bg-orange-500 h-full transition-all"
               title={`Chemistry: ${chemistryCount} (${chemistryPct}%)`}
             />
             <div
               style={{ width: `${mathPct}%` }}
-              className="bg-purple-500 h-full transition-all"
+              className="bg-indigo-600 h-full transition-all"
               title={`Mathematics: ${mathCount} (${mathPct}%)`}
             />
           </div>
 
           <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-md">
-              <div className="flex items-center gap-1.5 text-sky-400 font-semibold mb-1">
-                <div className="w-2 h-2 rounded-full bg-sky-500" />
+            <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-lg">
+              <div className="flex items-center gap-1.5 text-blue-700 font-bold mb-1">
+                <div className="w-2 h-2 rounded-full bg-blue-600" />
                 <span>Physics</span>
               </div>
-              <div className="text-lg font-mono font-bold text-white tabular-nums">{physicsCount}</div>
+              <div className="text-lg font-mono font-bold text-slate-900 tabular-nums">{physicsCount}</div>
               <div className="text-[10px] font-mono text-slate-500">{physicsPct}% of vault</div>
             </div>
 
-            <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-md">
-              <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1">
-                <div className="w-2 h-2 rounded-full bg-amber-500" />
+            <div className="p-3 bg-orange-50/50 border border-orange-100 rounded-lg">
+              <div className="flex items-center gap-1.5 text-orange-700 font-bold mb-1">
+                <div className="w-2 h-2 rounded-full bg-orange-500" />
                 <span>Chemistry</span>
               </div>
-              <div className="text-lg font-mono font-bold text-white tabular-nums">{chemistryCount}</div>
+              <div className="text-lg font-mono font-bold text-slate-900 tabular-nums">{chemistryCount}</div>
               <div className="text-[10px] font-mono text-slate-500">{chemistryPct}% of vault</div>
             </div>
 
-            <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-md">
-              <div className="flex items-center gap-1.5 text-purple-400 font-semibold mb-1">
-                <div className="w-2 h-2 rounded-full bg-purple-500" />
+            <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-lg">
+              <div className="flex items-center gap-1.5 text-indigo-700 font-bold mb-1">
+                <div className="w-2 h-2 rounded-full bg-indigo-600" />
                 <span>Math</span>
               </div>
-              <div className="text-lg font-mono font-bold text-white tabular-nums">{mathCount}</div>
+              <div className="text-lg font-mono font-bold text-slate-900 tabular-nums">{mathCount}</div>
               <div className="text-[10px] font-mono text-slate-500">{mathPct}% of vault</div>
             </div>
           </div>
         </div>
 
         {/* SRS Mastery Funnel */}
-        <div className="p-5 bg-[#0d1017] border border-white/[0.07] rounded-lg">
+        <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-mono font-semibold text-slate-300">SPACED REPETITION FUNNEL</h3>
+            <h3 className="text-xs font-mono font-bold text-slate-800">SPACED REPETITION FUNNEL</h3>
             <span className="text-[11px] font-mono text-slate-500">Mastery Retention Stages</span>
           </div>
 
@@ -188,12 +188,12 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
               return (
                 <div key={s.stage} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className={`font-mono font-medium ${s.badgeColor}`}>{s.name}</span>
-                    <span className="font-mono text-slate-400 tabular-nums">
-                      {s.count} <span className="text-slate-600">({pct}%)</span>
+                    <span className={`font-mono font-bold ${s.badgeColor}`}>{s.name}</span>
+                    <span className="font-mono text-slate-600 tabular-nums font-semibold">
+                      {s.count} <span className="text-slate-400">({pct}%)</span>
                     </span>
                   </div>
-                  <div className="h-2 w-full bg-black/60 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div
                       className={`h-full ${
                         s.stage === 1
@@ -201,7 +201,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
                           : s.stage === 2
                           ? "bg-amber-500"
                           : s.stage === 3
-                          ? "bg-sky-500"
+                          ? "bg-blue-600"
                           : "bg-emerald-500"
                       }`}
                       style={{ width: `${pct}%` }}
@@ -217,9 +217,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
       {/* Row 3: Mistake Root Cause Analysis & Top Weak Chapters */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Error Types */}
-        <div className="p-5 bg-[#0d1017] border border-white/[0.07] rounded-lg">
+        <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-mono font-semibold text-slate-300">ROOT CAUSE BREAKDOWN</h3>
+            <h3 className="text-xs font-mono font-bold text-slate-800">ROOT CAUSE BREAKDOWN</h3>
             <span className="text-[11px] font-mono text-slate-500">% Silly vs Conceptual</span>
           </div>
 
@@ -227,14 +227,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
             {errorCounts.map((item) => (
               <div key={item.type} className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className={`font-medium ${item.colors.text}`}>{item.type}</span>
-                  <span className="font-mono text-slate-400 tabular-nums">
-                    {item.count} <span className="text-slate-600">({item.pct}%)</span>
+                  <span className={`font-semibold ${item.colors.text}`}>{item.type}</span>
+                  <span className="font-mono text-slate-600 tabular-nums">
+                    {item.count} <span className="text-slate-400">({item.pct}%)</span>
                   </span>
                 </div>
-                <div className="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-white/40"
+                    className="h-full bg-blue-600"
                     style={{ width: `${item.pct}%` }}
                   />
                 </div>
@@ -244,9 +244,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
         </div>
 
         {/* Top Weak Chapters Heatmap */}
-        <div className="p-5 bg-[#0d1017] border border-white/[0.07] rounded-lg">
+        <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-mono font-semibold text-slate-300">HIGH ERROR CHAPTERS</h3>
+            <h3 className="text-xs font-mono font-bold text-slate-800">HIGH ERROR CHAPTERS</h3>
             <span className="text-[11px] font-mono text-slate-500">Error Density Heatmap</span>
           </div>
 
@@ -254,20 +254,20 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
             {topWeakChapters.map((ch) => (
               <div
                 key={ch.chapter}
-                className="p-2.5 bg-white/[0.02] border border-white/[0.04] rounded-md flex items-center justify-between"
+                className="p-2.5 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-between"
               >
                 <div>
-                  <div className="text-xs font-medium text-slate-100">{ch.chapter}</div>
-                  <div className="text-[10px] font-mono text-slate-500">{ch.subject}</div>
+                  <div className="text-xs font-semibold text-slate-900">{ch.chapter}</div>
+                  <div className="text-[10px] font-mono text-blue-600 font-medium">{ch.subject}</div>
                 </div>
 
                 <div className="flex items-center gap-2 font-mono text-xs">
                   {ch.criticalCount > 0 && (
-                    <span className="px-1.5 py-0.5 rounded text-[10px] bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] bg-rose-50 text-rose-600 border border-rose-200 font-bold">
                       {ch.criticalCount} Critical
                     </span>
                   )}
-                  <span className="text-slate-300 tabular-nums">{ch.count} mistakes</span>
+                  <span className="text-slate-700 font-bold tabular-nums">{ch.count} mistakes</span>
                 </div>
               </div>
             ))}
@@ -277,9 +277,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
 
       {/* Nemesis Spotlight Table */}
       {nemesisQuestions.length > 0 && (
-        <div className="p-5 bg-rose-950/15 border border-rose-500/20 rounded-lg">
-          <div className="flex items-center gap-2 mb-3 text-rose-300 text-xs font-mono font-semibold">
-            <Flame className="w-4 h-4 text-rose-400" />
+        <div className="p-5 bg-rose-50 border border-rose-200 rounded-xl shadow-xs">
+          <div className="flex items-center gap-2 mb-3 text-rose-800 text-xs font-mono font-bold">
+            <Flame className="w-4 h-4 text-rose-600" />
             <span>CRITICAL NEMESIS LIST (IMMEDIATE RE-PRACTICE REQUIRED)</span>
           </div>
 
@@ -288,14 +288,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
               <div
                 key={q.id}
                 onClick={() => onSelectQuestion(q)}
-                className="p-3 bg-black/40 hover:bg-black/60 border border-rose-500/30 rounded-md cursor-pointer transition-colors"
+                className="p-3 bg-white hover:bg-rose-50/50 border border-rose-200 rounded-lg cursor-pointer transition-colors shadow-xs"
               >
-                <div className="flex items-center justify-between text-[11px] font-mono text-rose-400 mb-1">
+                <div className="flex items-center justify-between text-[11px] font-mono text-rose-700 font-bold mb-1">
                   <span>{q.id} · {q.subject}</span>
                   <span>{q.attemptCount} failed attempts</span>
                 </div>
-                <div className="text-xs font-semibold text-slate-100 truncate mb-1">{q.subtopic}</div>
-                <div className="text-[11px] text-slate-400 line-clamp-1 italic">{q.studentNote}</div>
+                <div className="text-xs font-bold text-slate-900 truncate mb-1">{q.subtopic}</div>
+                <div className="text-[11px] text-slate-600 line-clamp-1 italic">{q.studentNote}</div>
               </div>
             ))}
           </div>
@@ -303,11 +303,11 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
       )}
 
       {/* Actionable JEE Strategic Tips */}
-      <div className="p-4 bg-sky-950/20 border border-sky-500/20 rounded-lg text-xs flex items-start gap-3">
-        <Lightbulb className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+      <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs flex items-start gap-3 shadow-xs">
+        <Lightbulb className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <div className="font-semibold text-sky-300">System Strategic Recommendation</div>
-          <p className="text-slate-300 leading-relaxed">
+          <div className="font-bold text-blue-900">System Strategic Recommendation</div>
+          <p className="text-slate-700 leading-relaxed">
             {sillyPct > 35
               ? `Warning: ${sillyPct}% of your logged errors are calculation slips or misread questions. Before working on hard multi-concept problems, run the "Pre-Test Silly Checklist" filter before every mock test.`
               : "Strong concept-to-execution discipline. Keep practicing Due For Review questions daily to convert Stage 2 & 3 questions into Stage 4 permanent memory."}

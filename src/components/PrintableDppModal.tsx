@@ -21,33 +21,33 @@ export const PrintableDppModal: React.FC<PrintableDppModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4 select-none animate-in fade-in duration-150 w-full max-w-full"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl bg-[#090d16] border border-white/[0.12] rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        className="w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-900"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="h-14 px-6 border-b border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0">
+        <div className="h-14 px-4 sm:px-6 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
-            <Printer className="w-4 h-4 text-sky-400" />
-            <h2 className="text-sm font-bold text-white tracking-wide">
-              PRINTABLE JEE ADVANCED RE-ATTEMPT DPP ({questions.length} QUESTIONS)
+            <Printer className="w-4 h-4 text-blue-600" />
+            <h2 className="text-xs sm:text-sm font-bold text-slate-900 tracking-wide">
+              PRINTABLE JEE DPP ({questions.length} QUESTIONS)
             </h2>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="px-4 py-1.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs rounded-md shadow-md flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save as PDF</span>
+              <span>Print / Save PDF</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1 rounded text-slate-400 hover:text-white hover:bg-white/[0.06]"
+              className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -55,8 +55,8 @@ export const PrintableDppModal: React.FC<PrintableDppModalProps> = ({
         </div>
 
         {/* Paper Sheet Preview Area */}
-        <div className="flex-1 overflow-y-auto p-6 bg-slate-950/60 custom-scrollbar flex justify-center">
-          <div className="w-full max-w-3xl bg-white text-slate-900 rounded-lg p-8 shadow-2xl space-y-6 print:p-0 print:shadow-none print:w-full">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6 bg-slate-100 custom-scrollbar flex justify-center">
+          <div className="w-full max-w-3xl bg-white text-slate-900 rounded-xl p-5 sm:p-8 shadow-md border border-slate-200 space-y-6 print:p-0 print:shadow-none print:w-full print:border-none">
             {/* Authentic JEE Test Header */}
             <div className="text-center pb-4 border-b-2 border-slate-900 space-y-1">
               <h1 className="text-xl font-black uppercase tracking-wider text-slate-950">

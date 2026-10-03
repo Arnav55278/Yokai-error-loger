@@ -71,29 +71,29 @@ export const FormulaVaultView: React.FC<FormulaVaultViewProps> = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#05070c] select-none text-xs">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#05070c] select-none text-xs w-full max-w-full">
       {/* Top Controls Header */}
-      <div className="p-4 border-b border-white/[0.08] bg-[#080b12]/95 backdrop-blur-md flex flex-wrap items-center justify-between gap-4 shrink-0">
+      <div className="p-3 sm:p-4 border-b border-white/[0.08] bg-[#080b12]/95 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 shrink-0 w-full max-w-full">
         <div>
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-sky-400" />
-            <h1 className="text-base font-bold text-white tracking-tight">
-              MASTER JEE ADVANCED FORMULA &amp; RAR CHEATSHEET
+            <Sparkles className="w-4 h-4 text-sky-400 shrink-0" />
+            <h1 className="text-sm sm:text-base font-bold text-white tracking-tight truncate">
+              JEE FORMULA &amp; RAR CHEATSHEET
             </h1>
           </div>
-          <p className="text-[11px] text-slate-400 mt-0.5 font-mono">
-            Auto-compiled golden results, traps &amp; formulas extracted from your mistakes ({formulaItems.length} Formulas Active)
+          <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono truncate">
+            Auto-compiled golden results &amp; formulas ({formulaItems.length} Formulas Active)
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Subject Pills */}
-          <div className="flex items-center p-1 bg-black/60 border border-white/[0.08] rounded-lg">
+          <div className="flex items-center p-0.5 bg-black/60 border border-white/[0.08] rounded-lg overflow-x-auto custom-scrollbar shrink-0">
             {(["ALL", "Physics", "Chemistry", "Mathematics"] as const).map((s) => (
               <button
                 key={s}
                 onClick={() => setSelectedSubject(s)}
-                className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                className={`px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all shrink-0 ${
                   selectedSubject === s
                     ? "bg-sky-500/20 text-sky-300 font-semibold border border-sky-500/40 shadow-sm"
                     : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
@@ -104,32 +104,34 @@ export const FormulaVaultView: React.FC<FormulaVaultViewProps> = ({
             ))}
           </div>
 
-          {/* Search */}
-          <div className="relative w-56">
-            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search formula, equation..."
-              className="w-full bg-[#05070a] border border-white/[0.08] rounded-md pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-sans"
-            />
-          </div>
+          <div className="flex items-center gap-2">
+            {/* Search */}
+            <div className="relative flex-1 sm:w-52">
+              <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search formulas..."
+                className="w-full bg-[#05070a] border border-white/[0.08] rounded-md pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-sans"
+              />
+            </div>
 
-          {/* Print Button */}
-          <button
-            onClick={handlePrint}
-            className="px-3 py-1.5 rounded-md bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] text-white flex items-center gap-1.5 transition-colors cursor-pointer font-medium"
-            title="Print or Save as PDF"
-          >
-            <Printer className="w-3.5 h-3.5 text-sky-400" />
-            <span>Print Sheet</span>
-          </button>
+            {/* Print Button */}
+            <button
+              onClick={handlePrint}
+              className="px-3 py-1.5 rounded-md bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] text-white flex items-center gap-1.5 transition-colors cursor-pointer font-medium text-xs shrink-0"
+              title="Print or Save as PDF"
+            >
+              <Printer className="w-3.5 h-3.5 text-sky-400" />
+              <span className="hidden sm:inline">Print Sheet</span>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-4 sm:space-y-6 custom-scrollbar w-full max-w-full">
         {groupedFormulas.length > 0 ? (
           groupedFormulas.map((group) => (
             <div key={`${group.subject}-${group.chapter}`} className="space-y-3">

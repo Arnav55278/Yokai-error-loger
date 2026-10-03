@@ -107,36 +107,36 @@ export const RapidFlashcardsView: React.FC<RapidFlashcardsViewProps> = ({
   const errorStyle = ERROR_TYPE_COLORS[currentQ.errorType] || ERROR_TYPE_COLORS["Conceptual Gap"];
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#05070c] select-none text-xs">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#05070c] select-none text-xs w-full max-w-full">
       {/* Top Bar for Flashcard Session */}
-      <div className="p-4 border-b border-white/[0.08] bg-[#080b12]/95 backdrop-blur-md flex items-center justify-between gap-4 shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="p-1.5 rounded-lg bg-sky-500/20 border border-sky-500/40 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
+      <div className="p-3 sm:p-4 border-b border-white/[0.08] bg-[#080b12]/95 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4 shrink-0 w-full max-w-full">
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 rounded-lg bg-sky-500/20 border border-sky-500/40 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.2)] shrink-0">
             <Zap className="w-4 h-4 fill-current" />
           </div>
-          <div>
+          <div className="truncate">
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-white tracking-wide">
+              <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide truncate">
                 RAPID ACTIVE RECALL SPRINT
               </h2>
-              <span className="font-mono text-[11px] text-sky-400 font-bold">
+              <span className="font-mono text-[10px] sm:text-[11px] text-sky-400 font-bold shrink-0">
                 {currentIndex + 1} / {questions.length}
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-mono">
+            <p className="text-[10px] text-slate-400 font-mono truncate hidden sm:block">
               Press [Space] to flip card · [← Again / Hard] · [→ Mastered / Good]
             </p>
           </div>
         </div>
 
         {/* Progress Bar & Timer */}
-        <div className="flex items-center gap-4">
-          <div className="text-right font-mono text-[11px]">
+        <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
+          <div className="text-right font-mono text-[11px] shrink-0">
             <span className="text-slate-400">Timer: </span>
             <span className="text-sky-300 font-bold">{elapsedSec}s</span>
           </div>
 
-          <div className="w-32 h-2 rounded-full bg-white/[0.08] overflow-hidden">
+          <div className="w-24 sm:w-32 h-2 rounded-full bg-white/[0.08] overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-sky-500 to-emerald-400 transition-all duration-300"
               style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
@@ -278,35 +278,35 @@ export const RapidFlashcardsView: React.FC<RapidFlashcardsViewProps> = ({
           </div>
 
           {/* Bottom Grading Bar */}
-          <div className="p-3 bg-[#080b12] border border-white/[0.08] rounded-xl flex items-center justify-between gap-3">
+          <div className="p-2.5 sm:p-3 bg-[#080b12] border border-white/[0.08] rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-3 w-full">
             <button
               onClick={() => onSelectQuestion(currentQ)}
-              className="px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 text-xs transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 text-xs transition-colors text-center"
             >
               Full Question Deep-Dive
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:gap-2">
               <button
                 onClick={() => handleGrade("again")}
-                className="px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                className="px-2 sm:px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-center gap-1"
               >
-                <AlertTriangle className="w-3.5 h-3.5" />
-                <span>Again (Hard) [←]</span>
+                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                <span>Again</span>
               </button>
               <button
                 onClick={() => handleGrade("good")}
-                className="px-4 py-2 bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                className="px-2 sm:px-4 py-2 bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-center gap-1"
               >
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Good (Retained)</span>
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                <span>Good</span>
               </button>
               <button
                 onClick={() => handleGrade("easy")}
-                className="px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                className="px-2 sm:px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-semibold rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-center gap-1"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Mastered [→]</span>
+                <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                <span>Mastered</span>
               </button>
             </div>
           </div>

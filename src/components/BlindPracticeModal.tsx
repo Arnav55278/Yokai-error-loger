@@ -35,6 +35,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
   const [isGrading, setIsGrading] = useState<boolean>(false);
+  const [mobileTab, setMobileTab] = useState<"question" | "scratchpad">("question");
 
   // Live Timer State
   const [seconds, setSeconds] = useState<number>(0);
@@ -79,7 +80,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
     }
   };
 
-  // Canvas drawing handlers
+  // Canvas drawing handlers (Mouse)
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -118,6 +119,45 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
     isDrawingRef.current = false;
   };
 
+  // Canvas touch handlers for smartphones
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas || e.touches.length === 0) return;
+    const rect = canvas.getBoundingClientRect();
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    isDrawingRef.current = true;
+    ctx.beginPath();
+    ctx.moveTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas || e.touches.length === 0) return;
+    const rect = canvas.getBoundingClientRect();
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.lineWidth = isEraser ? penWidth * 5 : penWidth;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    if (isEraser) {
+      ctx.globalCompositeOperation = "destination-out";
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.strokeStyle = penColor;
+    }
+
+    ctx.lineTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+    ctx.stroke();
+  };
+
+  const handleTouchEnd = () => {
+    isDrawingRef.current = false;
+  };
+
   const handleReveal = () => {
     setIsRevealed(true);
     setIsTimerRunning(false);
@@ -150,24 +190,28 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#06070a] text-slate-100 flex flex-col select-none overflow-hidden animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 bg-[#06070a] text-slate-100 flex flex-col select-none overflow-hidden animate-in fade-in duration-150 w-full max-w-full">
       {/* Top Exam Header */}
-      <div className="h-14 px-6 border-b border-white/[0.08] bg-[#090c12] flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-            <span className="font-mono text-xs font-bold text-white tracking-wider">CBT BLIND RE-ATTEMPT SIMULATOR</span>
+      <div className="h-13 sm:h-14 px-3 sm:px-6 border-b border-white/[0.08] bg-[#090c12] flex items-center justify-between shrink-0 min-w-0">
+        <div className="flex items-center gap-2 sm:gap-4 truncate min-w-0 pr-2">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-rose-500 animate-pulse" />
+            <span className="font-mono text-xs font-bold text-white tracking-wider hidden sm:inline">
+              CBT BLIND RE-ATTEMPT
+            </span>
+            <span className="font-mono text-xs font-bold text-white sm:hidden">
+              CBT
+            </span>
           </div>
 
-          <div className="text-xs font-mono text-slate-400 pl-4 border-l border-white/[0.08]">
-            Question <span className="text-white font-bold">{currentIndex + 1}</span> of{" "}
-            <span className="text-slate-400">{questions.length}</span>
+          <div className="text-[11px] sm:text-xs font-mono text-slate-400 pl-2 sm:pl-4 border-l border-white/[0.08] shrink-0">
+            Q <span className="text-white font-bold">{currentIndex + 1}</span>/{questions.length}
           </div>
         </div>
 
         {/* Center: Live Stopwatch Timer */}
-        <div className="flex items-center gap-3 px-4 py-1.5 bg-black/60 border border-white/[0.1] rounded-lg">
-          <span className="font-mono text-sm font-bold text-sky-400 tabular-nums tracking-wider">
+        <div className="flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1 sm:py-1.5 bg-black/60 border border-white/[0.1] rounded-lg shrink-0">
+          <span className="font-mono text-xs sm:text-sm font-bold text-sky-400 tabular-nums tracking-wider">
             {formatTimer(seconds)}
           </span>
           <button
@@ -179,7 +223,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
           </button>
           <button
             onClick={() => setSeconds(0)}
-            className="text-slate-400 hover:text-white"
+            className="text-slate-400 hover:text-white hidden sm:inline-block"
             title="Reset timer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -187,10 +231,10 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 rounded text-slate-400 hover:text-white hover:bg-white/[0.05]"
+            className="p-1.5 rounded text-slate-400 hover:text-white hover:bg-white/[0.05] hidden sm:block"
             title="Toggle Fullscreen"
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -205,10 +249,36 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
         </div>
       </div>
 
+      {/* Mobile Mode Switcher (Question vs Scratchpad) */}
+      <div className="lg:hidden flex items-center bg-[#07090e] border-b border-white/[0.08] p-1 shrink-0">
+        <button
+          onClick={() => setMobileTab("question")}
+          className={`flex-1 py-1.5 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "question"
+              ? "bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-xs"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          <Eye className="w-3.5 h-3.5" />
+          <span>Question &amp; Solution</span>
+        </button>
+        <button
+          onClick={() => setMobileTab("scratchpad")}
+          className={`flex-1 py-1.5 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "scratchpad"
+              ? "bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-xs"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          <PenTool className="w-3.5 h-3.5" />
+          <span>Touch Scratchpad</span>
+        </button>
+      </div>
+
       {/* Main Viewport: Question on left, Interactive Scratchpad on right */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/[0.05] overflow-hidden">
         {/* Left Column: Blind Question Image & Reveal Panel */}
-        <div className="bg-[#090c12] flex flex-col overflow-y-auto custom-scrollbar p-6 space-y-5">
+        <div className={`bg-[#090c12] flex flex-col overflow-y-auto custom-scrollbar p-3.5 sm:p-6 space-y-4 sm:space-y-5 ${mobileTab === "question" ? "flex" : "hidden lg:flex"}`}>
           {/* Blind Banner */}
           <div className="p-3 bg-white/[0.02] border border-white/[0.06] rounded-md flex items-center justify-between text-xs">
             <span className="text-slate-400 font-mono text-[11px]">
@@ -342,14 +412,14 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
         </div>
 
         {/* Right Column: Interactive Whiteboard / Rough Work Scratchpad */}
-        <div className="bg-[#05070a] flex flex-col relative overflow-hidden">
+        <div className={`bg-[#05070a] flex flex-col relative overflow-hidden ${mobileTab === "scratchpad" ? "flex" : "hidden lg:flex"}`}>
           {/* Scratchpad Toolbar */}
-          <div className="h-11 px-4 border-b border-white/[0.08] bg-[#0a0d14] flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono font-semibold text-slate-300">ROUGH SCRATCHPAD</span>
+          <div className="h-11 px-3 sm:px-4 border-b border-white/[0.08] bg-[#0a0d14] flex items-center justify-between shrink-0 overflow-x-auto custom-scrollbar">
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-slate-300">SCRATCHPAD</span>
 
               {/* Color swatches */}
-              <div className="flex items-center gap-1.5 pl-3 border-l border-white/[0.08]">
+              <div className="flex items-center gap-1.5 pl-2 sm:pl-3 border-l border-white/[0.08]">
                 {["#38bdf8", "#f43f5e", "#10b981", "#ffffff"].map((color) => (
                   <button
                     key={color}
@@ -358,7 +428,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
                       setIsEraser(false);
                     }}
                     style={{ backgroundColor: color }}
-                    className={`w-4 h-4 rounded-full transition-transform ${
+                    className={`w-3.5 sm:w-4 h-3.5 sm:h-4 rounded-full transition-transform ${
                       penColor === color && !isEraser ? "ring-2 ring-white scale-110" : "opacity-70 hover:opacity-100"
                     }`}
                   />
@@ -366,7 +436,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
               </div>
 
               {/* Stroke width */}
-              <div className="flex items-center gap-1 pl-3 border-l border-white/[0.08]">
+              <div className="flex items-center gap-1 pl-2 sm:pl-3 border-l border-white/[0.08]">
                 {[1.5, 3, 5].map((w) => (
                   <button
                     key={w}
@@ -381,7 +451,7 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 shrink-0 pl-2">
               <button
                 onClick={() => setIsEraser(!isEraser)}
                 className={`p-1.5 rounded transition-colors ${
@@ -412,6 +482,9 @@ export const BlindPracticeModal: React.FC<BlindPracticeModalProps> = ({
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               className="w-full h-full cursor-crosshair touch-none"
             />
           </div>

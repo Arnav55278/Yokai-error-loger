@@ -341,15 +341,15 @@ export const IngestionDrawer: React.FC<IngestionDrawerProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Drawer Header */}
-        <div className="h-14 px-6 border-b border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
-            <h2 className="text-sm font-bold text-white tracking-wide">
+        <div className="h-13 sm:h-14 px-3.5 sm:px-6 border-b border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 truncate pr-2">
+            <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] shrink-0" />
+            <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide truncate">
               LOG NEW JEE MISTAKE
             </h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Star Toggle */}
             <button
               type="button"
@@ -361,14 +361,14 @@ export const IngestionDrawer: React.FC<IngestionDrawerProps> = ({
               }`}
               title={starred ? "Starred Question" : "Mark as Starred"}
             >
-              <Star className={`w-4 h-4 ${starred ? "fill-amber-400" : ""}`} />
+              <Star className={`w-3.5 sm:w-4 h-3.5 sm:h-4 ${starred ? "fill-amber-400" : ""}`} />
             </button>
 
             {/* Custom Gemini API Key & Model Configuration Toggle */}
             <button
               type="button"
               onClick={() => setShowKeyConfig(!showKeyConfig)}
-              className={`px-2.5 py-1.5 rounded-md border text-xs font-mono flex items-center gap-1.5 transition-colors ${
+              className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-md border text-xs font-mono flex items-center gap-1.5 transition-colors ${
                 showKeyConfig || customApiKey.trim()
                   ? "bg-sky-500/20 border-sky-500/40 text-sky-300"
                   : "bg-white/[0.03] border-white/[0.07] text-slate-400 hover:text-white"
@@ -467,7 +467,7 @@ export const IngestionDrawer: React.FC<IngestionDrawerProps> = ({
         )}
 
         {/* Content Form */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar text-xs">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 custom-scrollbar text-xs w-full max-w-full">
           {/* AI Banner / Status */}
           {isAnalyzingAi && (
             <div className="p-3 bg-sky-950/40 border border-sky-500/40 rounded-lg flex items-center gap-3 text-sky-300 shadow-[0_0_15px_rgba(56,189,248,0.15)]">
@@ -917,7 +917,7 @@ export const IngestionDrawer: React.FC<IngestionDrawerProps> = ({
         </form>
 
         {/* Drawer Footer Actions */}
-        <div className="h-16 px-6 border-t border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0">
+        <div className="h-14 sm:h-16 px-3.5 sm:px-6 border-t border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0 w-full">
           <button
             type="button"
             onClick={onClose}

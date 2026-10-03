@@ -362,7 +362,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#06070a] text-slate-100 flex flex-col font-sans">
+    <div className="h-[100dvh] w-full max-w-full overflow-hidden bg-[#06070a] text-slate-100 flex flex-col font-sans select-none">
       {/* Strict Top Bar Contract Navigation */}
       <Header
         currentView={currentView}
@@ -394,7 +394,7 @@ export default function App() {
       <MobileApkBanner onOpenApkModal={() => setIsApkModalOpen(true)} />
 
       {/* Main Workspace Frame */}
-      <div className="flex-1 flex overflow-hidden relative">
+      <div className="flex-1 flex overflow-hidden relative w-full max-w-full">
         {/* Desktop 6-Dimensional Left Sidebar */}
         <div className="hidden md:flex shrink-0">
           <SidebarFilters
@@ -440,7 +440,7 @@ export default function App() {
         )}
 
         {/* Viewport Content (with bottom padding for mobile navigation dock) */}
-        <main className="flex-1 flex flex-col overflow-hidden bg-[#07090e] pb-14 md:pb-0">
+        <main className="flex-1 flex flex-col overflow-hidden bg-[#07090e] pb-20 md:pb-0 w-full max-w-full">
           {currentView === "gallery" && (
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <GalleryView

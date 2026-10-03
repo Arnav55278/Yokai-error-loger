@@ -63,24 +63,24 @@ export const ApkDownloaderModal: React.FC<ApkDownloaderModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-4 select-none animate-in fade-in duration-150 w-full max-w-full"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg bg-[#090d16] border border-white/[0.12] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        className="w-full max-w-lg bg-[#090d16] border border-white/[0.12] rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="h-14 px-6 border-b border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+        <div className="h-13 sm:h-14 px-4 sm:px-6 border-b border-white/[0.08] bg-[#06080e] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0">
               <Smartphone className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white tracking-wide">
+              <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide truncate">
                 APEXVAULT FOR ANDROID
               </h2>
-              <span className="text-[10px] font-mono text-emerald-400 font-semibold">
+              <span className="text-[10px] font-mono text-emerald-400 font-semibold block">
                 Official Mobile APK · v1.0.2
               </span>
             </div>
@@ -95,7 +95,7 @@ export const ApkDownloaderModal: React.FC<ApkDownloaderModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar text-xs">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-5 custom-scrollbar text-xs">
           {/* Hero Feature Banner */}
           <div className="p-4 bg-gradient-to-br from-emerald-950/40 via-sky-950/20 to-black border border-emerald-500/30 rounded-xl space-y-3">
             <div className="flex items-center justify-between">

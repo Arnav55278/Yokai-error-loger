@@ -90,25 +90,28 @@ export const Header: React.FC<HeaderProps> = ({
   const isToolActive = currentView === "formulas" || currentView === "flashcards";
 
   return (
-    <header className="h-14 border-b border-white/[0.08] bg-[#07090e]/95 backdrop-blur-xl px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 select-none shadow-md">
+    <header className="h-13 sm:h-14 border-b border-white/[0.08] bg-[#07090e]/95 backdrop-blur-xl px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 select-none shadow-md w-full max-w-full overflow-hidden">
       {/* Brand */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <a
           href="#"
           onClick={(e) => {
             e.preventDefault();
             onViewChange("gallery");
           }}
-          className="text-base font-bold tracking-tight text-white flex items-center gap-2 group"
+          className="text-sm sm:text-base font-bold tracking-tight text-white flex items-center gap-2 group"
         >
           <div
-            className="w-2.5 h-2.5 rounded-full shadow-[0_0_10px_currentColor]"
+            className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full shadow-[0_0_10px_currentColor] shrink-0"
             style={{ backgroundColor: currentThemeObj.accentHex, color: currentThemeObj.accentHex }}
           />
           <span className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent font-bold">
             ApexVault
           </span>
         </a>
+        <span className="text-[10px] font-mono text-slate-400 bg-white/[0.04] px-1.5 py-0.5 rounded border border-white/[0.06]">
+          {filteredCount}
+        </span>
       </div>
 
       {/* Streamlined View Navigation (Only 3 primary + Tools dropdown) */}
@@ -235,27 +238,28 @@ export const Header: React.FC<HeaderProps> = ({
       </nav>
 
       {/* Streamlined Right Actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         {/* Android APK Downloader Button */}
         {onOpenApkModal && (
           <button
             onClick={onOpenApkModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono transition-colors cursor-pointer"
+            className="flex items-center gap-1 p-1.5 sm:px-2.5 sm:py-1.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono transition-colors cursor-pointer"
             title="Download Android APK / Install App on Phone"
           >
             <Smartphone className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Install APK</span>
           </button>
         )}
+
         {/* Search */}
         <button
           onClick={onOpenCommandPalette}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-xs text-slate-400 hover:text-slate-200 transition-all font-mono"
+          className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 rounded-md bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-xs text-slate-400 hover:text-slate-200 transition-all font-mono"
           title="Search OCR text & tags (Ctrl + K)"
         >
           <Search className="w-3.5 h-3.5 text-sky-400" />
-          <span className="hidden sm:inline font-sans text-xs">Search</span>
-          <kbd className="hidden sm:inline px-1 py-0.2 bg-white/[0.06] border border-white/[0.1] rounded text-[10px] text-slate-400">
+          <span className="hidden md:inline font-sans text-xs">Search</span>
+          <kbd className="hidden lg:inline px-1 py-0.2 bg-white/[0.06] border border-white/[0.1] rounded text-[10px] text-slate-400">
             Ctrl K
           </kbd>
         </button>
@@ -264,16 +268,16 @@ export const Header: React.FC<HeaderProps> = ({
         {starredCount > 0 && onQuickFilterStarred && (
           <button
             onClick={onQuickFilterStarred}
-            className="flex items-center gap-1 px-2 py-1.5 rounded-md bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-300 text-xs font-mono transition-colors"
+            className="flex items-center gap-1 px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-md bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-300 text-xs font-mono transition-colors"
             title="Filter to Starred Questions"
           >
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span className="font-semibold">{starredCount}</span>
+            <span className="font-semibold text-[11px] sm:text-xs">{starredCount}</span>
           </button>
         )}
 
-        {/* Theme Switcher Dropdown */}
-        <div className="relative" ref={themeMenuRef}>
+        {/* Theme Switcher Dropdown (desktop only, available in user menu on mobile) */}
+        <div className="relative hidden sm:block" ref={themeMenuRef}>
           <button
             onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
             className="p-1.5 rounded-md bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-400 hover:text-white transition-colors"
@@ -312,10 +316,10 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Settings */}
+        {/* Settings (desktop only, available in user menu on mobile) */}
         <button
           onClick={onOpenSettings}
-          className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+          className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors hidden sm:block"
           title="Settings"
         >
           <Settings className="w-4 h-4" />
@@ -326,7 +330,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative" ref={userMenuRef}>
             <button
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] transition-all cursor-pointer"
+              className="flex items-center gap-1.5 p-0.5 sm:p-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] transition-all cursor-pointer"
               title={`${currentUser.username} (${currentUser.email})`}
             >
               <div
@@ -365,6 +369,42 @@ export const Header: React.FC<HeaderProps> = ({
                   </span>
                 </div>
 
+                {/* Mobile Extra Menu Actions */}
+                <div className="sm:hidden space-y-1 pt-1 border-t border-white/[0.08]">
+                  <button
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      onOpenSettings();
+                    }}
+                    className="w-full px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-white/[0.06] flex items-center gap-2 text-left"
+                  >
+                    <Settings className="w-3.5 h-3.5 text-sky-400" />
+                    <span>App Settings</span>
+                  </button>
+
+                  <div className="pt-1 text-[10px] font-mono text-slate-500 font-bold uppercase">
+                    Theme
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 pt-1">
+                    {APP_THEMES.map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          if (onSelectTheme) onSelectTheme(t.id);
+                          setIsUserMenuOpen(false);
+                        }}
+                        className={`px-1.5 py-1 rounded text-[10px] truncate border text-center transition-colors ${
+                          t.id === currentTheme
+                            ? "bg-white/[0.12] border-white/20 text-white font-bold"
+                            : "border-transparent text-slate-400 hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {t.name.split(" ")[0]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Logout Button */}
                 {onLogout && (
                   <button
@@ -383,20 +423,20 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-        {/* Practice Button */}
+        {/* Practice Button (Hidden on phone, accessible via Bottom Nav) */}
         <button
           onClick={onOpenPractice}
           disabled={filteredCount === 0}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] text-white font-medium text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] text-white font-medium text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
           <Play className="w-3.5 h-3.5 fill-current text-sky-400" />
           <span>Practice ({filteredCount})</span>
         </button>
 
-        {/* Primary Log Mistake Button */}
+        {/* Primary Log Mistake Button (Hidden on phone, accessible via center FAB) */}
         <button
           onClick={onOpenIngestion}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md shadow-sky-500/20 transition-all cursor-pointer"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md shadow-sky-500/20 transition-all cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>+ Log</span>

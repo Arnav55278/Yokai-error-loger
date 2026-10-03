@@ -63,8 +63,8 @@ export const TableView: React.FC<TableViewProps> = ({
   };
 
   return (
-    <div className="flex-1 overflow-x-auto select-none">
-      <table className="w-full text-left text-xs border-collapse">
+    <div className="flex-1 overflow-x-auto select-none custom-scrollbar w-full max-w-full">
+      <table className="min-w-[760px] w-full text-left text-xs border-collapse">
         <thead className="bg-[#0b0e14] sticky top-0 z-20 border-b border-white/[0.08] text-[11px] font-mono text-slate-400">
           <tr>
             <th

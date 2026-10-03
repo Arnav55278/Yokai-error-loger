@@ -69,9 +69,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ questions, onSelec
     .slice(0, 6);
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-6 select-none max-w-6xl mx-auto custom-scrollbar">
+    <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 select-none max-w-6xl mx-auto custom-scrollbar w-full max-w-full">
       {/* Executive KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {/* Total Logged */}
         <div className="p-4 bg-[#0d1017] border border-white/[0.07] rounded-lg">
           <div className="text-[11px] font-mono text-slate-400 mb-1">TOTAL LOGGED MISTAKES</div>

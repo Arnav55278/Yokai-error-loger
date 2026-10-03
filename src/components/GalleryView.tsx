@@ -62,7 +62,7 @@ export const GalleryView: React.FC<GalleryViewProps> = ({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-5 select-none">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 p-3 sm:p-5 select-none w-full max-w-full">
       {questions.map((q) => {
         const isNemesis = isNemesisQuestion(q);
         const due = isDueToday(q.nextReviewDate);
@@ -74,13 +74,13 @@ export const GalleryView: React.FC<GalleryViewProps> = ({
           <div
             key={q.id}
             onClick={() => onSelectQuestion(q)}
-            className="group relative bg-[#0b0e17] hover:bg-[#101422] border border-white/[0.07] hover:border-sky-500/40 rounded-xl overflow-hidden transition-all duration-200 flex flex-col cursor-pointer shadow-md hover:shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+            className="group relative bg-[#0b0e17] hover:bg-[#101422] border border-white/[0.07] hover:border-sky-500/40 rounded-xl overflow-hidden transition-all duration-200 flex flex-col cursor-pointer shadow-md hover:shadow-[0_10px_30px_rgba(0,0,0,0.6)] w-full max-w-full"
           >
             {/* Clean Card Header */}
-            <div className="px-3.5 py-2.5 flex items-center justify-between text-xs border-b border-white/[0.04] bg-white/[0.01]">
-              <div className="flex items-center gap-1.5 text-slate-400 text-[11px] truncate pr-2">
-                <span className="font-semibold text-slate-200">{q.subject}</span>
-                <span className="text-slate-600">/</span>
+            <div className="px-3 sm:px-3.5 py-2 sm:py-2.5 flex items-center justify-between text-xs border-b border-white/[0.04] bg-white/[0.01] min-w-0">
+              <div className="flex items-center gap-1.5 text-slate-400 text-[11px] truncate min-w-0 pr-2">
+                <span className="font-semibold text-slate-200 shrink-0">{q.subject}</span>
+                <span className="text-slate-600 shrink-0">/</span>
                 <span className="truncate text-slate-300">{q.chapter}</span>
               </div>
 
@@ -118,12 +118,12 @@ export const GalleryView: React.FC<GalleryViewProps> = ({
             </div>
 
             {/* Subtopic */}
-            <div className="px-3.5 py-2 flex items-center justify-between gap-2">
-              <h4 className="text-xs font-semibold text-slate-100 truncate group-hover:text-sky-300 transition-colors">
+            <div className="px-3 sm:px-3.5 py-2 flex items-center justify-between gap-2 min-w-0 w-full">
+              <h4 className="text-xs font-semibold text-slate-100 truncate min-w-0 flex-1 group-hover:text-sky-300 transition-colors">
                 {q.subtopic}
               </h4>
               <span
-                className={`text-[10px] font-mono px-2 py-0.5 rounded border shrink-0 ${errorStyle.bg} ${errorStyle.border} ${errorStyle.text}`}
+                className={`text-[10px] font-mono px-1.5 sm:px-2 py-0.5 rounded border shrink-0 ${errorStyle.bg} ${errorStyle.border} ${errorStyle.text}`}
               >
                 {q.errorType}
               </span>

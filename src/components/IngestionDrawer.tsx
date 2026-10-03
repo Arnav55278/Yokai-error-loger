@@ -13,6 +13,7 @@ import {
   Search,
   BookOpen,
   Edit3,
+  Camera,
 } from "lucide-react";
 import {
   QuestionMistake,
@@ -567,7 +568,11 @@ export const IngestionDrawer: React.FC<IngestionDrawerProps> = ({
                   />
                   <Upload className="w-6 h-6 text-slate-400 group-hover:text-sky-400 mb-2 transition-colors" />
                   <span className="font-semibold text-slate-200">Drop or Paste Screenshot</span>
-                  <span className="text-[10px] text-slate-500 mt-1">Ctrl + V / Auto WebP Compressed</span>
+                  <span className="text-[10px] text-slate-500 mt-0.5">Ctrl + V / Auto WebP Compressed</span>
+                  <div className="mt-2 flex items-center gap-1 text-[10px] font-mono text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">
+                    <Camera className="w-3 h-3" />
+                    <span>Snap with Phone Camera</span>
+                  </div>
                 </label>
               )}
             </div>

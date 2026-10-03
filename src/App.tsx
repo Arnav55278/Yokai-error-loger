@@ -31,9 +31,17 @@ import { BlindPracticeModal } from "./components/BlindPracticeModal";
 import { CommandPalette } from "./components/CommandPalette";
 import { SettingsModal } from "./components/SettingsModal";
 import { DetailModal } from "./components/DetailModal";
+import { AuthScreen } from "./components/AuthScreen";
+import { ApkDownloaderModal } from "./components/ApkDownloaderModal";
+import { MobileApkBanner } from "./components/MobileApkBanner";
+import { MobileBottomNav } from "./components/MobileBottomNav";
+import { X } from "lucide-react";
+import { AuthUser } from "./types/auth";
+import { getCurrentUser, logoutUser } from "./services/authService";
 import { SRSGrade, calculateSRSUpdate, isDueToday, isNemesisQuestion, isSillyMistake } from "./utils/srsEngine";
 
 export default function App() {
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => getCurrentUser());
   const [questions, setQuestions] = useState<QuestionMistake[]>([]);
   const [settings, setSettings] = useState<AppSettings>({
     googleDriveClientId: "",
@@ -75,6 +83,8 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedDetailQuestion, setSelectedDetailQuestion] = useState<QuestionMistake | null>(null);
   const [isPrintDppOpen, setIsPrintDppOpen] = useState(false);
+  const [isApkModalOpen, setIsApkModalOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   // Initial Load from IndexedDB
   useEffect(() => {
@@ -346,6 +356,11 @@ export default function App() {
     });
   };
 
+  // If user is not authenticated, show the Ultra Pro Auth Gate
+  if (!currentUser) {
+    return <AuthScreen onAuthenticated={(user) => setCurrentUser(user)} />;
+  }
+
   return (
     <div className="min-h-screen bg-[#06070a] text-slate-100 flex flex-col font-sans">
       {/* Strict Top Bar Contract Navigation */}
@@ -357,6 +372,11 @@ export default function App() {
         starredCount={questions.filter((q) => q.starred).length}
         syncState={syncState}
         settings={settings}
+        currentUser={currentUser}
+        onLogout={() => {
+          logoutUser();
+          setCurrentUser(null);
+        }}
         onOpenIngestion={() => {
           setPastedImage(null);
           setIsIngestionOpen(true);
@@ -366,21 +386,61 @@ export default function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         onQuickFilterStarred={() => handleQuickPreset("starred")}
         onOpenPrintDpp={() => setIsPrintDppOpen(true)}
+        onOpenApkModal={() => setIsApkModalOpen(true)}
         onSelectTheme={handleSelectTheme}
       />
 
-      {/* Main Workspace Frame */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* 6-Dimensional Left Sidebar */}
-        <SidebarFilters
-          filter={filter}
-          onChangeFilter={setFilter}
-          questions={questions}
-          onQuickPreset={handleQuickPreset}
-        />
+      {/* Mobile Phone Floating APK Installation Banner */}
+      <MobileApkBanner onOpenApkModal={() => setIsApkModalOpen(true)} />
 
-        {/* Viewport Content */}
-        <main className="flex-1 flex flex-col overflow-hidden bg-[#07090e]">
+      {/* Main Workspace Frame */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Desktop 6-Dimensional Left Sidebar */}
+        <div className="hidden md:flex shrink-0">
+          <SidebarFilters
+            filter={filter}
+            onChangeFilter={setFilter}
+            questions={questions}
+            onQuickPreset={handleQuickPreset}
+          />
+        </div>
+
+        {/* Mobile Slide-Over Filter Drawer for Phone Screens */}
+        {isMobileFiltersOpen && (
+          <div
+            className="md:hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex animate-in fade-in duration-150"
+            onClick={() => setIsMobileFiltersOpen(false)}
+          >
+            <div
+              className="w-4/5 max-w-xs h-full bg-[#070a10] border-r border-white/[0.1] shadow-2xl flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="h-12 px-4 border-b border-white/[0.08] flex items-center justify-between">
+                <span className="text-xs font-bold text-white font-mono">FILTERS &amp; SYLLABUS</span>
+                <button
+                  onClick={() => setIsMobileFiltersOpen(false)}
+                  className="p-1 rounded text-slate-400 hover:text-white"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                <SidebarFilters
+                  filter={filter}
+                  onChangeFilter={setFilter}
+                  questions={questions}
+                  onQuickPreset={(p) => {
+                    handleQuickPreset(p);
+                    setIsMobileFiltersOpen(false);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Viewport Content (with bottom padding for mobile navigation dock) */}
+        <main className="flex-1 flex flex-col overflow-hidden bg-[#07090e] pb-14 md:pb-0">
           {currentView === "gallery" && (
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <GalleryView
@@ -508,6 +568,26 @@ export default function App() {
         isOpen={isPrintDppOpen}
         onClose={() => setIsPrintDppOpen(false)}
         questions={filteredQuestions}
+      />
+
+      {/* Mobile Phone Bottom Navigation Dock */}
+      <MobileBottomNav
+        currentView={currentView}
+        onViewChange={setCurrentView}
+        onOpenIngestion={() => {
+          setPastedImage(null);
+          setIsIngestionOpen(true);
+        }}
+        onOpenPractice={handleStartPractice}
+        onOpenFilters={() => setIsMobileFiltersOpen(true)}
+        onOpenApkModal={() => setIsApkModalOpen(true)}
+        filteredCount={filteredQuestions.length}
+      />
+
+      {/* Android APK Package Downloader & Mobile Installer Modal */}
+      <ApkDownloaderModal
+        isOpen={isApkModalOpen}
+        onClose={() => setIsApkModalOpen(false)}
       />
     </div>
   );

@@ -14,8 +14,13 @@ import {
   Zap,
   BookOpen,
   Printer,
+  LogOut,
+  User,
+  Smartphone,
+  Download,
 } from "lucide-react";
 import { WorkspaceView, SyncState, AppSettings, AppTheme } from "../types/vault";
+import { AuthUser } from "../types/auth";
 import { APP_THEMES } from "../constants/themes";
 
 interface HeaderProps {
@@ -26,12 +31,15 @@ interface HeaderProps {
   starredCount?: number;
   syncState: SyncState;
   settings?: AppSettings;
+  currentUser?: AuthUser | null;
+  onLogout?: () => void;
   onOpenIngestion: () => void;
   onOpenPractice: () => void;
   onOpenCommandPalette: () => void;
   onOpenSettings: () => void;
   onQuickFilterStarred?: () => void;
   onOpenPrintDpp?: () => void;
+  onOpenApkModal?: () => void;
   onSelectTheme?: (theme: AppTheme) => void;
 }
 
@@ -41,18 +49,23 @@ export const Header: React.FC<HeaderProps> = ({
   filteredCount,
   starredCount = 0,
   settings,
+  currentUser,
+  onLogout,
   onOpenIngestion,
   onOpenPractice,
   onOpenCommandPalette,
   onOpenSettings,
   onQuickFilterStarred,
   onOpenPrintDpp,
+  onOpenApkModal,
   onSelectTheme,
 }) => {
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const themeMenuRef = useRef<HTMLDivElement | null>(null);
   const toolsMenuRef = useRef<HTMLDivElement | null>(null);
+  const userMenuRef = useRef<HTMLDivElement | null>(null);
 
   const currentTheme = settings?.theme || "obsidian";
   const currentThemeObj = APP_THEMES.find((t) => t.id === currentTheme) || APP_THEMES[0];
@@ -65,6 +78,9 @@ export const Header: React.FC<HeaderProps> = ({
       }
       if (toolsMenuRef.current && !toolsMenuRef.current.contains(e.target as Node)) {
         setIsToolsMenuOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -200,6 +216,19 @@ export const Header: React.FC<HeaderProps> = ({
                   <span>Print JEE DPP Paper</span>
                 </button>
               )}
+
+              {onOpenApkModal && (
+                <button
+                  onClick={() => {
+                    onOpenApkModal();
+                    setIsToolsMenuOpen(false);
+                  }}
+                  className="w-full px-2.5 py-1.5 rounded-lg flex items-center gap-2 text-left text-slate-300 hover:bg-white/[0.05] transition-colors"
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Download Android APK</span>
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -207,6 +236,17 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Streamlined Right Actions */}
       <div className="flex items-center gap-2">
+        {/* Android APK Downloader Button */}
+        {onOpenApkModal && (
+          <button
+            onClick={onOpenApkModal}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono transition-colors cursor-pointer"
+            title="Download Android APK / Install App on Phone"
+          >
+            <Smartphone className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Install APK</span>
+          </button>
+        )}
         {/* Search */}
         <button
           onClick={onOpenCommandPalette}
@@ -280,6 +320,68 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Settings className="w-4 h-4" />
         </button>
+
+        {/* User Profile Avatar Dropdown */}
+        {currentUser && (
+          <div className="relative" ref={userMenuRef}>
+            <button
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] transition-all cursor-pointer"
+              title={`${currentUser.username} (${currentUser.email})`}
+            >
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center font-bold text-[11px] text-slate-950 shadow-inner"
+                style={{ backgroundColor: currentUser.avatarColor || "#38bdf8" }}
+              >
+                {currentUser.username.charAt(0).toUpperCase()}
+              </div>
+            </button>
+
+            {isUserMenuOpen && (
+              <div className="absolute right-0 top-10 w-64 bg-[#0a0d16] border border-white/[0.12] rounded-xl shadow-2xl p-3 z-50 space-y-2.5 animate-in fade-in duration-100 text-xs">
+                {/* User Summary */}
+                <div className="flex items-center gap-2.5 pb-2.5 border-b border-white/[0.08]">
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm text-slate-950 shrink-0"
+                    style={{ backgroundColor: currentUser.avatarColor || "#38bdf8" }}
+                  >
+                    {currentUser.username.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="truncate">
+                    <div className="font-bold text-white text-xs truncate">
+                      {currentUser.username}
+                    </div>
+                    <div className="text-[11px] font-mono text-slate-400 truncate">
+                      {currentUser.email}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Target Goal */}
+                <div className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[11px] font-mono text-slate-300 flex items-center justify-between">
+                  <span className="text-slate-500">GOAL:</span>
+                  <span className="text-sky-300 font-semibold truncate pl-2">
+                    {currentUser.targetYear || "JEE Advanced 2026"}
+                  </span>
+                </div>
+
+                {/* Logout Button */}
+                {onLogout && (
+                  <button
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      onLogout();
+                    }}
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 text-xs font-medium transition-colors flex items-center justify-between cursor-pointer"
+                  >
+                    <span>Sign Out</span>
+                    <LogOut className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Practice Button */}
         <button
